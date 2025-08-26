@@ -1,0 +1,38 @@
+{
+  "name": "@strapi-railway-framework/backend",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Strapi CMS backend with SendGrid integration",
+  "keywords": [
+    "strapi",
+    "cms",
+    "railway",
+    "sendgrid"
+  ],
+  "scripts": {
+    "build": "strapi build",
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "strapi": "strapi",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@strapi/strapi": "^4.25.3",
+    "@strapi/plugin-users-permissions": "^4.25.3",
+    "@strapi/plugin-i18n": "^4.25.3",
+    "@strapi/plugin-graphql": "^4.25.3",
+    "@strapi/plugin-email": "^4.25.3",
+    "@strapi/provider-email-sendgrid": "^4.25.3",
+    "pg": "^8.11.3",
+    "redis": "^4.6.13"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=18.0.0 <=22.x.x",
+    "npm": ">=9.0.0"
+  }
+}

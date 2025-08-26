@@ -1,0 +1,15 @@
+[phases.build]
+cmds = [
+    "npm ci --include=dev",
+    "npm run build"
+]
+
+[phases.start]
+cmd = "npm run start"
+
+[variables]
+NODE_VERSION = "20"
+NPM_VERSION = "10"
+
+[staticAssets]
+"public" = "./"

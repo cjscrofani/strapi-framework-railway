@@ -1,0 +1,36 @@
+{
+  "extends": "@strapi/typescript-utils/tsconfigs/server",
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ES2020"],
+    "module": "CommonJS",
+    "skipLibCheck": true,
+    "allowJs": true,
+    "outDir": "./dist",
+    "rootDir": "./",
+    "strict": true,
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "baseUrl": "./",
+    "paths": {
+      "~/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "src/**/*",
+    "config/**/*",
+    "types/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build"
+  ]
+}
