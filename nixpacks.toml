@@ -1,15 +1,82 @@
-[phases.build]
+# Nixpacks Configuration for Railway
+# Optimized build and deployment configuration for Strapi Railway Framework
+
+[build]
+# Use Node.js 20 with npm
+providers = ["node"]
+
+[variables]
+# Build-time environment variables
+NODE_VERSION = "20"
+NPM_VERSION = "10"
+NODE_ENV = "production"
+NPM_CONFIG_PRODUCTION = "false"  # Install dev dependencies for build
+CI = "true"
+HUSKY = "0"  # Disable git hooks in CI
+
+[phases.setup]
+# Install system dependencies
+nixPkgs = ["nodejs_20", "npm", "python3", "gcc", "pkg-config", "postgresql", "redis"]
+
+[phases.install]
+# Install Node.js dependencies with optimizations
 cmds = [
-    "npm ci --include=dev",
-    "npm run build"
+    "npm ci --prefer-offline --no-audit --progress=false --include=dev",
+    "npm run postinstall || true",
+]
+
+[phases.build]
+# Build the application
+cmds = [
+    "npm run build",
+    "npm run build:admin || true",
+    # Run database migrations if needed
+    "npm run db:migrate || true",
+    # Clean up unnecessary files to reduce image size
+    "rm -rf node_modules/.cache",
+    "rm -rf .next/cache",
+    "rm -rf coverage",
+    "rm -rf .nyc_output",
+    "npm prune --production",
+]
+
+[phases.optimize]
+# Post-build optimizations
+cmds = [
+    # Create necessary directories with proper permissions
+    "mkdir -p public/uploads/thumbnails",
+    "mkdir -p database/migrations",
+    "mkdir -p database/seeds",
+    "mkdir -p database/backups",
+    "mkdir -p logs",
+    "mkdir -p temp",
+    # Set proper permissions
+    "chmod -R 755 public",
+    "chmod -R 755 database",
+    "chmod -R 755 logs",
+    # Remove development files
+    "find . -name '*.ts' -not -path './src/*' -not -path './database/*' -delete || true",
+    "find . -name '*.test.js' -delete || true",
+    "find . -name '*.spec.js' -delete || true",
+    "rm -rf test tests __tests__ || true",
 ]
 
 [phases.start]
+# Production startup command
 cmd = "npm run start"
 
-[variables]
-NODE_VERSION = "20"
-NPM_VERSION = "10"
-
+# Static assets configuration
 [staticAssets]
 "public" = "./"
+
+# Health check configuration
+[start.healthcheck]
+path = "/health"
+interval = 30
+timeout = 10
+retries = 3
+
+# Container resource limits
+[start.resources]
+memory = "1Gi"
+cpu = "1.0"

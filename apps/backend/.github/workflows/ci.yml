@@ -1,0 +1,279 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'apps/backend/**'
+      - '.github/workflows/ci.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'apps/backend/**'
+      - '.github/workflows/ci.yml'
+
+env:
+  NODE_VERSION: 20
+  DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
+  REDIS_URL: redis://localhost:6379
+  NODE_ENV: test
+  JWT_SECRET: test_jwt_secret
+  API_TOKEN_SALT: test_api_token_salt
+  ADMIN_JWT_SECRET: test_admin_jwt_secret
+  TRANSFER_TOKEN_SALT: test_transfer_token_salt
+  APP_KEYS: test_key_1,test_key_2,test_key_3,test_key_4
+
+jobs:
+  test:
+    name: Test Suite
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test_db
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+          
+      redis:
+        image: redis:7
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'apps/backend/package-lock.json'
+
+    - name: Install dependencies
+      working-directory: apps/backend
+      run: npm ci --prefer-offline --no-audit
+
+    - name: Run linting
+      working-directory: apps/backend
+      run: npm run lint
+
+    - name: Run type checking
+      working-directory: apps/backend
+      run: npm run type-check
+
+    - name: Run database migrations
+      working-directory: apps/backend
+      run: npm run db:migrate
+
+    - name: Run tests
+      working-directory: apps/backend
+      run: npm run test:coverage
+      
+    - name: Upload coverage reports
+      uses: codecov/codecov-action@v3
+      with:
+        file: apps/backend/coverage/lcov.info
+        flags: backend
+        name: backend-coverage
+
+  build:
+    name: Build Application
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'apps/backend/package-lock.json'
+
+    - name: Install dependencies
+      working-directory: apps/backend
+      run: npm ci --prefer-offline --no-audit
+
+    - name: Build application
+      working-directory: apps/backend
+      run: npm run build
+
+    - name: Build admin panel
+      working-directory: apps/backend
+      run: npm run build:admin
+
+    - name: Archive build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-files
+        path: |
+          apps/backend/build/
+          apps/backend/dist/
+          apps/backend/public/
+        retention-days: 7
+
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'apps/backend/package-lock.json'
+
+    - name: Install dependencies
+      working-directory: apps/backend
+      run: npm ci --prefer-offline --no-audit
+
+    - name: Run npm audit
+      working-directory: apps/backend
+      run: npm audit --audit-level high
+      continue-on-error: true
+
+    - name: Run security scan with Snyk
+      uses: snyk/actions/node@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        args: --severity-threshold=high --file=apps/backend/package.json
+      continue-on-error: true
+
+  performance:
+    name: Performance Tests
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'pull_request'
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test_db
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+          
+      redis:
+        image: redis:7
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'apps/backend/package-lock.json'
+
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: build-files
+        path: apps/backend/
+
+    - name: Install dependencies
+      working-directory: apps/backend
+      run: npm ci --prefer-offline --no-audit --omit=dev
+
+    - name: Run performance tests
+      working-directory: apps/backend
+      run: npm run test:performance
+      continue-on-error: true
+
+    - name: Upload performance results
+      uses: actions/upload-artifact@v4
+      with:
+        name: performance-results
+        path: apps/backend/performance-results/
+        retention-days: 7
+
+  docker:
+    name: Docker Build Test
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: apps/backend
+        file: apps/backend/Dockerfile
+        push: false
+        tags: strapi-railway-framework:test
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+    - name: Test Docker image
+      run: |
+        docker run --rm -d --name test-container \
+          -e NODE_ENV=production \
+          -e DATABASE_URL=${{ env.DATABASE_URL }} \
+          -e JWT_SECRET=${{ env.JWT_SECRET }} \
+          -p 1337:1337 \
+          strapi-railway-framework:test
+        
+        # Wait for container to start
+        sleep 30
+        
+        # Health check
+        curl -f http://localhost:1337/health || exit 1
+        
+        # Stop container
+        docker stop test-container
+
+  notify:
+    name: Notify Results
+    runs-on: ubuntu-latest
+    needs: [test, build, security, performance, docker]
+    if: always()
+    
+    steps:
+    - name: Notify success
+      if: needs.test.result == 'success' && needs.build.result == 'success'
+      run: echo "✅ CI pipeline passed successfully"
+      
+    - name: Notify failure
+      if: needs.test.result == 'failure' || needs.build.result == 'failure'
+      run: echo "❌ CI pipeline failed"
