@@ -1,0 +1,32 @@
+{
+  "subject": "Thank you for contacting us - {{siteName}}",
+  "category": "transactional",
+  "description": "Confirmation email for contact form submissions",
+  "variables": [
+    {
+      "name": "name",
+      "type": "string",
+      "description": "Contact person's name",
+      "required": true
+    },
+    {
+      "name": "subject",
+      "type": "string",
+      "description": "Subject of the inquiry",
+      "required": true
+    },
+    {
+      "name": "message",
+      "type": "text",
+      "description": "The original message",
+      "required": true
+    },
+    {
+      "name": "responseTime",
+      "type": "string",
+      "description": "Expected response time",
+      "required": false,
+      "default": "24 hours"
+    }
+  ]
+}

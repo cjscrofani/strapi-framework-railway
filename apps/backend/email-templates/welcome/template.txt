@@ -1,0 +1,26 @@
+Welcome to {{siteName}}!
+
+Hello {{userName}}!
+
+We're thrilled to have you join our community. Your account has been successfully created and you're all set to get started.
+
+Here's what you can do next:
+- Explore our features and services
+- Complete your profile setup  
+- Connect with other members
+- Start your journey with us
+
+{{#if activationLink}}
+Please visit the following link to activate your account:
+{{activationLink}}
+{{/if}}
+
+If you have any questions or need help getting started, don't hesitate to reach out to our support team.
+
+Best regards,
+The {{siteName}} Team
+
+---
+© {{currentYear}} {{siteName}}. All rights reserved.
+Visit our website: {{siteUrl}}
+Contact Support: {{siteUrl}}/contact

@@ -1,0 +1,37 @@
+{
+  "subject": "Welcome to {{siteName}}!",
+  "category": "transactional",
+  "description": "Welcome new users to the platform",
+  "variables": [
+    {
+      "name": "userName",
+      "type": "string",
+      "description": "User's display name",
+      "required": true
+    },
+    {
+      "name": "userEmail",
+      "type": "email",
+      "description": "User's email address",
+      "required": true
+    },
+    {
+      "name": "activationLink",
+      "type": "url",
+      "description": "Account activation URL",
+      "required": false
+    },
+    {
+      "name": "siteName",
+      "type": "string",
+      "description": "Website/company name",
+      "required": true
+    },
+    {
+      "name": "siteUrl",
+      "type": "url",
+      "description": "Website URL",
+      "required": true
+    }
+  ]
+}

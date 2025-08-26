@@ -1,0 +1,86 @@
+{
+  "kind": "collectionType",
+  "collectionName": "email_logs",
+  "info": {
+    "singularName": "email-log",
+    "pluralName": "email-logs",
+    "displayName": "Email Log",
+    "description": "Email activity and analytics logging"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "messageId": {
+      "type": "string",
+      "unique": true
+    },
+    "recipient": {
+      "type": "email",
+      "required": true
+    },
+    "subject": {
+      "type": "string",
+      "required": true
+    },
+    "template": {
+      "type": "string"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["sent", "delivered", "opened", "clicked", "bounced", "failed", "spam"],
+      "default": "sent"
+    },
+    "sentAt": {
+      "type": "datetime"
+    },
+    "deliveredAt": {
+      "type": "datetime"
+    },
+    "openedAt": {
+      "type": "datetime"
+    },
+    "clickedAt": {
+      "type": "datetime"
+    },
+    "bouncedAt": {
+      "type": "datetime"
+    },
+    "error": {
+      "type": "text"
+    },
+    "bounceReason": {
+      "type": "text"
+    },
+    "opens": {
+      "type": "integer",
+      "default": 0
+    },
+    "clicks": {
+      "type": "integer",
+      "default": 0
+    },
+    "ipAddress": {
+      "type": "string"
+    },
+    "userAgent": {
+      "type": "text"
+    },
+    "categories": {
+      "type": "json"
+    },
+    "customArgs": {
+      "type": "json"
+    },
+    "sendgridEventId": {
+      "type": "string"
+    },
+    "asmGroupId": {
+      "type": "integer"
+    },
+    "marketingCampaignId": {
+      "type": "string"
+    }
+  }
+}

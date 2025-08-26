@@ -1,0 +1,85 @@
+{
+  "kind": "collectionType",
+  "collectionName": "email_failures",
+  "info": {
+    "singularName": "email-failure",
+    "pluralName": "email-failures",
+    "displayName": "Email Failure",
+    "description": "Track permanent email failures and issues"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "errorCode": {
+      "type": "string",
+      "required": true
+    },
+    "errorMessage": {
+      "type": "text",
+      "required": true
+    },
+    "errorDetails": {
+      "type": "text"
+    },
+    "template": {
+      "type": "string"
+    },
+    "messageId": {
+      "type": "string"
+    },
+    "attempts": {
+      "type": "integer",
+      "default": 1
+    },
+    "isPermanent": {
+      "type": "boolean",
+      "default": false
+    },
+    "isResolved": {
+      "type": "boolean",
+      "default": false
+    },
+    "resolvedAt": {
+      "type": "datetime"
+    },
+    "resolvedBy": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "resolution": {
+      "type": "text"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": ["delivery", "authentication", "template", "quota", "reputation", "network", "other"],
+      "default": "other"
+    },
+    "priority": {
+      "type": "enumeration",
+      "enum": ["low", "medium", "high", "critical"],
+      "default": "medium"
+    },
+    "lastOccurrence": {
+      "type": "datetime"
+    },
+    "occurrenceCount": {
+      "type": "integer",
+      "default": 1
+    },
+    "metadata": {
+      "type": "json"
+    }
+  }
+}

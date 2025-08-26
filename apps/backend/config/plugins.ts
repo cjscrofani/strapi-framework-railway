@@ -5,12 +5,19 @@ export default ({ env }) => ({
       provider: 'sendgrid',
       providerOptions: {
         apiKey: env('SENDGRID_API_KEY'),
+        // Optional: Configure additional SendGrid options
+        host: env('SENDGRID_HOST', 'smtp.sendgrid.net'),
+        port: env.int('SENDGRID_PORT', 587),
       },
       settings: {
         defaultFrom: env('SENDGRID_FROM_EMAIL'),
         defaultFromName: env('SENDGRID_FROM_NAME', 'Strapi App'),
         defaultReplyTo: env('SENDGRID_REPLY_TO'),
         testAddress: env('SENDGRID_TEST_ADDRESS'),
+        // Additional email settings
+        defaultSubject: env('SENDGRID_DEFAULT_SUBJECT', 'Message from Strapi'),
+        templatePath: env('EMAIL_TEMPLATE_PATH', './email-templates'),
+        enableTemplateEngine: env.bool('EMAIL_TEMPLATE_ENGINE', true),
       },
     },
   },

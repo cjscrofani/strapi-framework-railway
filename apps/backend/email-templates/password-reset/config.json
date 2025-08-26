@@ -1,0 +1,32 @@
+{
+  "subject": "Reset your password - {{siteName}}",
+  "category": "transactional",
+  "description": "Password reset email with secure link",
+  "variables": [
+    {
+      "name": "userName",
+      "type": "string",
+      "description": "User's display name",
+      "required": true
+    },
+    {
+      "name": "resetLink",
+      "type": "url",
+      "description": "Password reset URL",
+      "required": true
+    },
+    {
+      "name": "expirationTime",
+      "type": "string",
+      "description": "Link expiration time",
+      "required": false,
+      "default": "24 hours"
+    },
+    {
+      "name": "siteName",
+      "type": "string",
+      "description": "Website/company name",
+      "required": true
+    }
+  ]
+}

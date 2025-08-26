@@ -1,0 +1,69 @@
+{
+  "kind": "collectionType",
+  "collectionName": "email_system_logs",
+  "info": {
+    "singularName": "email-system-log",
+    "pluralName": "email-system-logs",
+    "displayName": "Email System Log",
+    "description": "System-level email logging and monitoring"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "level": {
+      "type": "enumeration",
+      "enum": ["info", "warn", "error", "debug"],
+      "required": true
+    },
+    "message": {
+      "type": "text",
+      "required": true
+    },
+    "email": {
+      "type": "email"
+    },
+    "template": {
+      "type": "string"
+    },
+    "messageId": {
+      "type": "string"
+    },
+    "error": {
+      "type": "text"
+    },
+    "metadata": {
+      "type": "json"
+    },
+    "timestamp": {
+      "type": "datetime",
+      "required": true
+    },
+    "source": {
+      "type": "string",
+      "default": "system"
+    },
+    "ipAddress": {
+      "type": "string"
+    },
+    "userAgent": {
+      "type": "text"
+    },
+    "resolved": {
+      "type": "boolean",
+      "default": false
+    },
+    "resolvedAt": {
+      "type": "datetime"
+    },
+    "resolvedBy": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "notes": {
+      "type": "text"
+    }
+  }
+}

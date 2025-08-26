@@ -1,0 +1,65 @@
+{
+  "kind": "collectionType",
+  "collectionName": "email_unsubscribes",
+  "info": {
+    "singularName": "email-unsubscribe",
+    "pluralName": "email-unsubscribes",
+    "displayName": "Email Unsubscribe",
+    "description": "Track email unsubscribe events and preferences"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "source": {
+      "type": "enumeration",
+      "enum": ["webhook", "manual", "preference_center", "list_unsubscribe"],
+      "default": "manual"
+    },
+    "reason": {
+      "type": "text"
+    },
+    "asmGroupId": {
+      "type": "integer"
+    },
+    "asmGroupName": {
+      "type": "string"
+    },
+    "unsubscribedAt": {
+      "type": "datetime",
+      "required": true
+    },
+    "ipAddress": {
+      "type": "string"
+    },
+    "userAgent": {
+      "type": "text"
+    },
+    "campaign": {
+      "type": "string"
+    },
+    "messageId": {
+      "type": "string"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "resubscribedAt": {
+      "type": "datetime"
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
+    },
+    "metadata": {
+      "type": "json"
+    }
+  }
+}

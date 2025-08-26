@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank you for contacting us</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: #4CAF50;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+        .content {
+            background: #f9f9f9;
+            padding: 30px 20px;
+            border-radius: 0 0 10px 10px;
+        }
+        .message-box {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            color: #1976d2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Message Received!</h1>
+    </div>
+    
+    <div class="content">
+        <h2>Thank you, {{name}}!</h2>
+        
+        <p>We've successfully received your message and appreciate you taking the time to contact us.</p>
+        
+        <div class="message-box">
+            <h3>Your Message Summary:</h3>
+            <p><strong>Subject:</strong> {{subject}}</p>
+            <p><strong>Message:</strong></p>
+            <p>{{message}}</p>
+        </div>
+        
+        <div class="info-box">
+            <strong>What happens next?</strong>
+            <ul>
+                <li>Our team will review your message carefully</li>
+                <li>We'll respond within {{responseTime}}</li>
+                <li>You'll receive a detailed response to this email address</li>
+            </ul>
+        </div>
+        
+        <p>If you have any urgent questions or need immediate assistance, please don't hesitate to contact us directly.</p>
+        
+        <p>Thank you for your interest in {{siteName}}!</p>
+        
+        <p>Best regards,<br>The {{siteName}} Support Team</p>
+    </div>
+    
+    <div class="footer">
+        <p>&copy; {{currentYear}} {{siteName}}. All rights reserved.</p>
+        <p><a href="{{siteUrl}}">Visit our website</a> | <a href="{{siteUrl}}/contact">Contact Support</a></p>
+    </div>
+</body>
+</html>
