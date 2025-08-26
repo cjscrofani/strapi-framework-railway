@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_content_stat_items",
+  "info": {
+    "displayName": "Stat Item",
+    "description": "Statistical information display"
+  },
+  "options": {},
+  "attributes": {
+    "number": {
+      "type": "string",
+      "required": true
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "suffix": {
+      "type": "string"
+    },
+    "prefix": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
+    }
+  }
+}

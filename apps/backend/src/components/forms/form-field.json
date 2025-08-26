@@ -1,0 +1,39 @@
+{
+  "collectionName": "components_forms_form_fields",
+  "info": {
+    "displayName": "Form Field",
+    "description": "Dynamic form field configuration"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "placeholder": {
+      "type": "string"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": ["text", "email", "tel", "textarea", "select", "checkbox", "radio"],
+      "required": true
+    },
+    "isRequired": {
+      "type": "boolean",
+      "default": false
+    },
+    "options": {
+      "type": "json"
+    },
+    "validation": {
+      "type": "json"
+    },
+    "helpText": {
+      "type": "string"
+    }
+  }
+}

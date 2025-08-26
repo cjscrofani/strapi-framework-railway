@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_sections_about_previews",
+  "info": {
+    "displayName": "About Preview",
+    "description": "Preview section for about content on homepage"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "richtext",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "stats": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.stat-item"
+    },
+    "button": {
+      "type": "component",
+      "component": "shared.button"
+    }
+  }
+}

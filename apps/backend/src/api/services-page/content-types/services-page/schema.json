@@ -1,0 +1,53 @@
+{
+  "kind": "singleType",
+  "collectionName": "services_pages",
+  "info": {
+    "singularName": "services-page",
+    "pluralName": "services-pages",
+    "displayName": "Services Page",
+    "description": "Services page content and configuration"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
+      "required": true
+    },
+    "pageTitle": {
+      "type": "string",
+      "required": true
+    },
+    "pageDescription": {
+      "type": "text",
+      "required": true
+    },
+    "featuredServices": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::service.service"
+    },
+    "serviceCategories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::service-category.service-category"
+    },
+    "callToAction": {
+      "type": "component",
+      "component": "sections.cta-section"
+    },
+    "processSteps": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.process-step"
+    },
+    "pricingTiers": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.pricing-tier"
+    }
+  }
+}

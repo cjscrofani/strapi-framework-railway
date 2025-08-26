@@ -45,4 +45,20 @@ export default [
   'strapi::session',
   'strapi::favicon',
   'strapi::public',
+  // Custom cache middleware for API responses
+  {
+    name: 'global::cache',
+    config: {
+      ttl: 3600, // 1 hour
+      keyGenerator: (ctx) => {
+        const url = new URL(ctx.request.url, `http://${ctx.request.host}`);
+        const query = url.searchParams.toString();
+        return `api:${ctx.request.method}:${url.pathname}${query ? ':' + query : ''}`;
+      },
+      skipCache: (ctx) => {
+        // Skip cache for admin API
+        return ctx.request.url.startsWith('/admin');
+      },
+    },
+  },
 ];

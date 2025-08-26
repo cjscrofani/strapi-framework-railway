@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_forms_contact_forms",
+  "info": {
+    "displayName": "Contact Form",
+    "description": "Contact form configuration"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "fields": {
+      "type": "component",
+      "repeatable": true,
+      "component": "forms.form-field"
+    },
+    "submitButtonText": {
+      "type": "string",
+      "default": "Send Message"
+    },
+    "successMessage": {
+      "type": "text",
+      "required": true
+    },
+    "emailTemplate": {
+      "type": "string"
+    },
+    "recipients": {
+      "type": "json"
+    }
+  }
+}

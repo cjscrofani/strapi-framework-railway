@@ -1,0 +1,53 @@
+{
+  "collectionName": "components_sections_hero_sections",
+  "info": {
+    "displayName": "Hero Section",
+    "description": "Main hero section for pages"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subtitle": {
+      "type": "text"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images", "videos"]
+    },
+    "backgroundVideo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["videos"]
+    },
+    "primaryButton": {
+      "type": "component",
+      "component": "shared.button"
+    },
+    "secondaryButton": {
+      "type": "component",
+      "component": "shared.button"
+    },
+    "alignment": {
+      "type": "enumeration",
+      "enum": ["left", "center", "right"],
+      "default": "center"
+    },
+    "overlay": {
+      "type": "boolean",
+      "default": true
+    },
+    "overlayOpacity": {
+      "type": "integer",
+      "default": 50,
+      "min": 0,
+      "max": 100
+    }
+  }
+}

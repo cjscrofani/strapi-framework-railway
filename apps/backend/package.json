@@ -15,7 +15,10 @@
     "start": "strapi start",
     "strapi": "strapi",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "migrate": "node scripts/migrate.js",
+    "seed": "strapi develop --no-build --no-watch",
+    "setup": "npm run migrate && npm run seed"
   },
   "dependencies": {
     "@strapi/strapi": "^4.25.3",

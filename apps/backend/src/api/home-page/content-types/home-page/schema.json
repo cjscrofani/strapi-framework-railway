@@ -1,0 +1,54 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_pages",
+  "info": {
+    "singularName": "home-page",
+    "pluralName": "home-pages",
+    "displayName": "Home Page",
+    "description": "Home page content and sections"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
+      "required": true
+    },
+    "hero": {
+      "type": "component",
+      "component": "sections.hero-section",
+      "required": true
+    },
+    "aboutPreview": {
+      "type": "component",
+      "component": "sections.about-preview"
+    },
+    "servicesPreview": {
+      "type": "component",
+      "component": "sections.services-preview"
+    },
+    "testimonialsSection": {
+      "type": "component",
+      "component": "sections.testimonials-section"
+    },
+    "blogPreview": {
+      "type": "component",
+      "component": "sections.blog-preview"
+    },
+    "ctaSection": {
+      "type": "component",
+      "component": "sections.cta-section"
+    },
+    "featuredContent": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.feature-grid",
+        "sections.stats-section",
+        "sections.image-gallery"
+      ]
+    }
+  }
+}

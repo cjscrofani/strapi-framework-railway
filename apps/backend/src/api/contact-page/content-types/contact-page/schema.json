@@ -1,0 +1,57 @@
+{
+  "kind": "singleType",
+  "collectionName": "contact_pages",
+  "info": {
+    "singularName": "contact-page",
+    "pluralName": "contact-pages",
+    "displayName": "Contact Page",
+    "description": "Contact page content and form configuration"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
+      "required": true
+    },
+    "pageTitle": {
+      "type": "string",
+      "required": true
+    },
+    "pageDescription": {
+      "type": "text",
+      "required": true
+    },
+    "contactInfo": {
+      "type": "component",
+      "component": "content.contact-info",
+      "required": true
+    },
+    "officeLocations": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.office-location"
+    },
+    "contactForm": {
+      "type": "component",
+      "component": "forms.contact-form",
+      "required": true
+    },
+    "mapConfiguration": {
+      "type": "component",
+      "component": "content.map-config"
+    },
+    "businessHours": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.business-hours"
+    },
+    "emergencyContact": {
+      "type": "component",
+      "component": "content.emergency-contact"
+    }
+  }
+}

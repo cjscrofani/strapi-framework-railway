@@ -1,0 +1,59 @@
+{
+  "kind": "singleType",
+  "collectionName": "about_pages",
+  "info": {
+    "singularName": "about-page",
+    "pluralName": "about-pages",
+    "displayName": "About Page",
+    "description": "About page content including team and timeline"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
+      "required": true
+    },
+    "pageTitle": {
+      "type": "string",
+      "required": true
+    },
+    "pageDescription": {
+      "type": "text",
+      "required": true
+    },
+    "missionStatement": {
+      "type": "richtext",
+      "required": true
+    },
+    "companyValues": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.value-item"
+    },
+    "timeline": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.timeline-item"
+    },
+    "teamMembers": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.team-member"
+    },
+    "achievements": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.achievement-item"
+    },
+    "featuredImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    }
+  }
+}

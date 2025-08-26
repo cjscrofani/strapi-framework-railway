@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "media_folders",
+  "info": {
+    "singularName": "media-folder",
+    "pluralName": "media-folders",
+    "displayName": "Media Folder",
+    "description": "Organize media files in folders"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "parent": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::media-folder.media-folder",
+      "inversedBy": "children"
+    },
+    "children": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::media-folder.media-folder",
+      "mappedBy": "parent"
+    },
+    "path": {
+      "type": "string",
+      "required": true
+    },
+    "isPublic": {
+      "type": "boolean",
+      "default": true
+    },
+    "sortOrder": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}
